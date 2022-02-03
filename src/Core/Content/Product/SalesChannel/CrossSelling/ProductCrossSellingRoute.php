@@ -8,6 +8,7 @@ use Shopware\Core\Content\Product\Aggregate\ProductCrossSelling\ProductCrossSell
 use Shopware\Core\Content\Product\Aggregate\ProductCrossSelling\ProductCrossSellingEntity;
 use Shopware\Core\Content\Product\Aggregate\ProductVisibility\ProductVisibilityDefinition;
 use Shopware\Core\Content\Product\Events\ProductCrossSellingIdsCriteriaEvent;
+use Shopware\Core\Content\Product\Events\ProductCrossSellingsLoadCriteriaEvent;
 use Shopware\Core\Content\Product\Events\ProductCrossSellingsLoadedEvent;
 use Shopware\Core\Content\Product\Events\ProductCrossSellingStreamCriteriaEvent;
 use Shopware\Core\Content\Product\ProductCollection;
@@ -122,6 +123,10 @@ class ProductCrossSellingRoute extends AbstractProductCrossSellingRoute
             ->addFilter(new EqualsFilter('product.id', $productId))
             ->addFilter(new EqualsFilter('active', 1))
             ->addSorting(new FieldSorting('position', FieldSorting::ASCENDING));
+
+        $this->eventDispatcher->dispatch(
+            new ProductCrossSellingsLoadCriteriaEvent($criteria, $context)
+        );
 
         /** @var ProductCrossSellingCollection $crossSellings */
         $crossSellings = $this->crossSellingRepository
