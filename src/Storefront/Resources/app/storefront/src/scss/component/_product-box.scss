@@ -112,15 +112,17 @@ $box-image-height-img: 332px;
 /* stylelint-disable value-no-vendor-prefix, property-no-vendor-prefix */
 // See for further information: https://github.com/postcss/autoprefixer/issues/1141#issuecomment-430938342
 .product-name {
+    --sw-product-name-line-clamp: 2;
+    --sw-product-name-line-height: 1.375rem;
     color: $headings-color;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-    height: 2.75rem;
+    -webkit-line-clamp: var(--sw-product-name-line-clamp);
+    line-clamp: var(--sw-product-name-line-clamp);
+    height: calc(var(--sw-product-name-line-height) * var(--sw-product-name-line-clamp));
     margin-bottom: 10px;
     font-size: 1.125rem;
-    line-height: 1.375rem;
+    line-height: var(--sw-product-name-line-height);
     overflow: hidden;
     text-overflow: ellipsis;
     text-decoration: none;
